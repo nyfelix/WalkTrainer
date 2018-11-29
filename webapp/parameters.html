@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Laufsystem UI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm navbar-light bg-dark py-0">
+    <div class="navbar-brand text-white">Laufsystem UI</div>
+    <div class="navbar-nav">
+        <ul class="nav justify-content-center">
+            <li class="nav-item p-1 border border-bottom-0 border-secondary"><a class="nav-item nav-link text-white" href="index.html">Controls</a></li>
+            <li class="nav-item p-1 border border-bottom-0 border-secondary bg-secondary"><a class="nav-item nav-link text-white" href="#">Paramters</a></li>
+            <li class="nav-item p-1 border border-bottom-0 border-secondary"><a class="nav-item nav-link text-white" href="patterns.html">Patterns</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="row mt-5 mb-0">
+    <div class="col justify-content-center">
+        <p class="text-center">Used actuators</p>
+    </div>
+</div>
+<div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group" role="group" aria-label="First group" id="actuatorButtons">
+        <button type="button" class="btn btn-secondary">0</button>
+        <button type="button" class="btn btn-secondary">1</button>
+        <button type="button" class="btn btn-secondary">2</button>
+        <button type="button" class="btn btn-secondary">3</button>
+        <button type="button" class="btn btn-secondary">4</button>
+        <button type="button" class="btn btn-secondary">5</button>
+        <button type="button" class="btn btn-secondary">6</button>
+        <button type="button" class="btn btn-secondary">7</button>
+    </div>
+    <form>
+        <div class="form-group mt-3">
+            <label for="cycleTime">Cycletime</label>
+            <input type="text" class="form-control" id="cycleTime" aria-describedby="cycleTimeHelp" placeholder="e.g. 3000">
+            <small id="cycleTimeHelp" class="form-text text-muted">in milliseconds</small>
+        </div>
+        <div class="form-group">
+            <label for="steps">Steps</label>
+            <input type="text" class="form-control" id="steps" aria-describedby="stepsHelp" placeholder="e.g 8">
+            <small id="stepsHelp" class="form-text text-muted">max. 10 steps</small>
+        </div>
+        <button type="submit" class="btn btn-secondary" id="upload">Upload</button>
+    </form>
+</div>
+<script src="js/functions.js"></script>
+</body>
+</html>
