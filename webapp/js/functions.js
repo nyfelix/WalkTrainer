@@ -20,11 +20,11 @@ window.onload = function() {
 
 function togglePatternButtons(){
     if(walking === true){
-        $("#patternButtons button").attr('disabled',false);
+        $("#patternButtons button").attr('disabled',true);
     }
     else
     {
-        $("#patternButtons button").attr('disabled',true);
+        $("#patternButtons button").attr('disabled',false);
     }
 
 }
@@ -152,7 +152,7 @@ $("[data-save]").click(function () {
             patterns['save'+saveId][index] = [];
             patterns['save' + saveId][index] = config.data.datasets[index].data.filter(copyArray);
         }
-        $("#cancelButton").trigger("click");
+        $("#saveButton").trigger("click");
     }
 
     if(copySelected == true){
@@ -194,33 +194,60 @@ $("#copyModal button").click(function () {                              //copyin
     }
     //patterns['save'+copyId] = patterns['save'+saveId];
     enableSaveButtons();
-    $("#cancelButton").trigger("click");
+    $("#copyButton").trigger("click");
     console.log("CopyID: " + copyId);
 });
 
-$("#saveButton").click(function () {
-    saveSelected = true;
-    $("#copyButton, #clearButton").prop("disabled", true);
-    $("#cancelButton").removeClass("d-none");
 
-    enableSaveButtons();
+$("#saveButton").click(function () {
+    if(saveSelected === false){
+        saveSelected = true;
+        $("#copyButton, #clearButton").prop("disabled", true);
+        $(this).toggleClass("btn-success btn-danger").html("Cancel");
+        enableSaveButtons();
+    }
+    else{
+        saveSelected = false;
+        $(this).toggleClass("btn-success btn-danger").html("Save to");
+        $("#saveButton, #copyButton, #clearButton").prop("disabled",false);
+        disableSaveButtons();
+    }
 });
 
 $("#copyButton").click(function () {
-    copySelected = true;
-    $("#saveButton, #clearButton").prop("disabled", true);
-    $("#cancelButton").removeClass("d-none");
+    if(copySelected === false){
+        copySelected = true;
+        $("#saveButton, #clearButton").prop("disabled", true);
+        $(this).toggleClass("btn-danger btn-warning").html("Cancel");
+        enableSaveButtons();
+        disableSaveButtons();
+    }
+    else {
+        copySelected = false;
+        $(this).toggleClass("btn-danger btn-warning").html("Copy");
+        $("#saveButton, #copyButton, #clearButton").prop("disabled",false);
+        disableSaveButtons();
+    }
 
-    enableSaveButtons();
-    disableSaveButtons();
 });
 
 $("#clearButton").click(function () {
-    copySelected = true;
-    $("#saveButton, #copyButton").prop("disabled", true);
-    $("#cancelButton").removeClass("d-none");
+    if(clearSelected === false){
+        clearSelected = true;
+        $("#saveButton, #copyButton").prop("disabled", true);
+        $(this).toggleClass("btn-danger btn-primary").html("Cancel");
+        enableSaveButtons();
+        disableSaveButtons();
+    }
+    else {
+        clearSelected = false;
+        $(this).toggleClass("btn-danger btn-primary").html("Clear");
+        $("#saveButton, #copyButton, #clearButton").prop("disabled",false);
+        disableSaveButtons();
+    }
 });
 
+/*
 $("#cancelButton").click(function () {
     $("#saveButton, #copyButton, #clearButton").prop("disabled",false);
     saveSelected = false;
@@ -229,6 +256,7 @@ $("#cancelButton").click(function () {
     $("#cancelButton").addClass("d-none");
     disableSaveButtons();
 });
+*/
 
 //charts.js functions for comparing
 

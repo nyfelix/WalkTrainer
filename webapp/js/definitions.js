@@ -22,19 +22,13 @@ var config = {
     type: 'line',
     data: {
         labels: ['0', '1', '2', '3', '4', '5', '6'],
-        datasets: [{
+        datasets: [/*{
             label: 'My First dataset',
             backgroundColor: window.chartColors.red,
             borderColor: window.chartColors.red,
             data: [],
             fill: false
-        }, {
-            label: 'My Second dataset',
-            fill: false,
-            backgroundColor: window.chartColors.blue,
-            borderColor: window.chartColors.blue,
-            data: []
-        }]
+        }*/]
     },
     options: {
         maintainAspectRatio: true,
@@ -48,7 +42,7 @@ var config = {
         responsive: true,
         title: {
             display: true,
-            text: 'Walkingpatterns'
+            text: 'Walking patterns'
         },
         tooltips: {
             mode: 'index',
