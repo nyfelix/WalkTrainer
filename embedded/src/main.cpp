@@ -1,4 +1,5 @@
 #include <Wire.h>
+#include <Api.h>
 #include <Adafruit_PWMServoDriver.h>
 #include <stdio.h>
 
@@ -31,7 +32,10 @@ void setup()
 {
   // put your setup code here, to run once:
   Serial.begin(9600);
+  Serial.setDebugOutput(true);
   Serial.println("Setup Done");
+
+  setupApi();
 
   pwm.begin();
   pwm.setPWMFreq(60); // Set to whatever you like, we don't use it in this demo!
@@ -54,6 +58,8 @@ void setup()
 
 void loop()
 {
+    loopApi();
+
     posCalculator(0,0);
     posCalculator(0,2);
     posCalculator(0,4);
@@ -68,7 +74,8 @@ void loop()
         }
     }
 
-   Serial.println(currentStep);
+   //Serial.println(currentStep);
+   Serial.println(WiFi.localIP()); 
 }
 
 void posCalculator(int index, int pin)
