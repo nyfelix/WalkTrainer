@@ -14,7 +14,31 @@ window.onload = function() {
             $(saveName).prop('disabled',true);
         }
     }*/
-   togglePatternButtons();
+
+   if(!(localStorage.getItem("actuators") === null)){
+       actuators = JSON.parse(localStorage.getItem("actuators"));
+       actuators.forEach(function (value,index,array) {
+           if(array[index] == 1){
+               $("[data-actuator = "+index+"]").addClass('active');
+           }
+       })
+
+   }
+   for(var index = 0; index < 3; index++){
+       if(!(localStorage.getItem("save" + index) === null)){
+           patterns.save1 = JSON.parse(localStorage.getItem("save" + index));
+       }
+   }
+
+    if(!(localStorage.getItem("steps") === null)){
+       steps = JSON.parse(localStorage.getItem("steps"));
+    }
+
+
+   togglePatternButtons();/*else
+   {
+       localStorage.actuators = '';
+   }*/
    disableSaveButtons();
 };
 
@@ -84,7 +108,7 @@ $("[data-nav]").click(function () {
 $('#actuatorButtons button').click(function() {
     $(this).toggleClass("active");
     var index = $(this).text();
-    console.log($(this).text());
+    console.log(index);
     if(actuators[index])
     {
         actuators[index] = 0;
@@ -135,6 +159,8 @@ $("#uploadButton").click(function () {
         }
         config.data.datasets.push(newDataset);
     }
+    localStorage.setItem("actuators",JSON.stringify(actuators));
+    localStorage.setItem("steps",JSON.stringify(steps));
     window.myLine.update();
 
 });
@@ -147,11 +173,13 @@ $("[data-save]").click(function () {
     if(saveSelected == true){
         for(var index = 0; index <pinNumber.length; index++){
             for(var j = 0; j < config.data.datasets[index].data.length; j++){
-                config.data.datasets[index].data[j].toFixed(0) ;
+                config.data.datasets[index].data[j] = parseInt(config.data.datasets[index].data[j]).toFixed(0) ;
             }
             patterns['save'+saveId][index] = [];
             patterns['save' + saveId][index] = config.data.datasets[index].data.filter(copyArray);
+            localStorage.setItem("save"+saveId, JSON.stringify(patterns["save"+saveId]));
         }
+        localStorage.setItem("save"+saveId, JSON.stringify(patterns["save"+saveId]));
         $("#saveButton").trigger("click");
     }
 

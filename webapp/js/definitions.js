@@ -11,7 +11,6 @@ var clearSelected = false;
 var saveId = 0;
 var copyId = 0;
 var stepsInput = $("#stepsInput");
-var numberPages = 3;
 
 var STEPS = [];
 for(var index = 0; index < maxSteps; index++){
