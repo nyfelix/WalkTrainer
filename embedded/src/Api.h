@@ -30,6 +30,7 @@ String handlePOST(String url, String content);
 String handleGET(String url, String params);
 //////////////////////////////////////////////////
 
+std::function<void(JsonObject&)> cb_request;
 
 void setupApi() {
   // Connect to Wi-Fi network with SSID and password
@@ -48,6 +49,14 @@ void setupApi() {
   server.begin();
 }
 
+void printJSONHeaders() {
+  //ToDo: Set proper Headers here
+  client.println("HTTP/1.1 200 OK");
+  client.println("Content-Type: text/json");
+  client.println("Access-Control-Allow-Origin: *");
+  client.println("");
+  }
+
 void loopApi() {
   if (!client) {
     client = server.available();
@@ -56,21 +65,18 @@ void loopApi() {
     if (client.available()) {
       // read request
       String req = client.readString();
+      Serial.println(req);
       //handle Request
       String response = handleRequest(req);
       // send response
+      printJSONHeaders();
       client.print(response.c_str());
       client.stop();
     }
   }
 }
 
-void printJSONHeaders() {
-  //ToDo: Set proper Headers here
-  client.println("HTTP/1.1 200 OK");
-  client.println("Content-Type: text/json");
-  client.println("");
-}
+
 
 // General
 String handleRequest(String req) {
@@ -81,7 +87,7 @@ String handleRequest(String req) {
   String url = fullUrl.substring(0, fullUrl.indexOf("?"));
   String params = fullUrl.substring(fullUrl.indexOf("?")+1);
   if (method == "POST") {
-    //Serial.println(req);
+    Serial.println(req);
     String content = req.substring(req.indexOf("\r\n\r\n"));
     //Serial.println(content);
     return handlePOST(url, content);
@@ -100,14 +106,13 @@ String handlePOST(String url, String content) {
     if (!root.success()) {
       return RESPONSE_DEFAULT_INVALID;
     }
+    cb_request(root);
   }
   return RESPONSE_DEFAULT_SUCCESS;
 }
 
 String handleGET(String url, String params) {
-  Serial.println(url);
   if (url == "/state") {
-    printJSONHeaders();
     return RESPONSE_NOT_FOUND;
   }
   return "";

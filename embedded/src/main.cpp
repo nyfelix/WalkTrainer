@@ -27,6 +27,11 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
 void posCalculator(int index, int pin);
 
+void callbackPost(JsonObject& content) {
+    //Serial.println(content["steps"].as<String>());
+    //Serial.println(content["cycleTime"].as<double>());
+    cycleTime = content["cycleTime"].as<double>(); 
+}
 
 void setup()
 {
@@ -36,6 +41,8 @@ void setup()
   Serial.println("Setup Done");
 
   setupApi();
+
+  cb_request = callbackPost;
 
   pwm.begin();
   pwm.setPWMFreq(60); // Set to whatever you like, we don't use it in this demo!
@@ -59,7 +66,8 @@ void setup()
 void loop()
 {
     loopApi();
-
+    delay(100);
+    Serial.println(cycleTime);
     posCalculator(0,0);
     posCalculator(0,2);
     posCalculator(0,4);
@@ -75,7 +83,6 @@ void loop()
     }
 
    //Serial.println(currentStep);
-   Serial.println(WiFi.localIP()); 
 }
 
 void posCalculator(int index, int pin)
