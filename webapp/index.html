@@ -21,8 +21,8 @@
             <ul class="nav justify-content-center">
                 <li id="nav-controls" class="nav-item p-1 border border-bottom-0 border-secondary bg-secondary" data-nav="1"><a
                         class="nav-item nav-link text-white" href="#">Controls</a></li>
-                <li id="nav-parameters" class="nav-item p-1 border border-bottom-0 border-secondary " data-nav="2"><a
-                        class="nav-item nav-link text-white" href="#">Paramters</a></li>
+                <li id="nav-configurations" class="nav-item p-1 border border-bottom-0 border-secondary " data-nav="2"><a
+                        class="nav-item nav-link text-white" href="#">Configurations</a></li>
                 <li id="nav-patterns" class="nav-item p-1 border border-bottom-0 border-secondary " data-nav="3"><a
                         class="nav-item nav-link text-white" href="#">Patterns</a></li>
             </ul>
@@ -45,33 +45,40 @@
             <div class ="col-3">
             </div>
         </div>
-        <div class="row my-5">
+        <div class="row justify-content-center">
+            <div class="form-group text-center">
+                <label for="urlInput">URL</label>
+                <input type="text" class="form-control" id="urlInput" aria-describedby="stepsHelp" placeholder="e.g. 192.168.0.100/setPattern" value="">
+                <small id="urlInputHelp" class="form-text text-muted">type in the url of your adafruit and add /setPattern</small>
+            </div>
         </div>
-        <div class="row my-5 my-md-2"></div>
-        <div class="row my-5 my-md-2"></div>
-        <div class="row my-5 my-md-2"></div>
-        <div class="row my-5 my-md-2"></div>
+        <div class="row">
+        </div>
+        <div class="row my-1 my-md-2"></div>
+        <div class="row my-1 my-md-2"></div>
+        <div class="row my-1 my-md-2"></div>
+        <div class="row my-1 my-md-2"></div>
         <div id="patternButtons">
             <div class="row my-5 justify-content-center">
                 <div class="col-sm-5 col-md-4 text-center justify-content-center">
-                    <button class="btn btn-dark btn-lg btn-block" id="pattern1">Pattern 1</button>
+                    <button class="btn btn-dark btn-lg btn-block" id="pattern1" data-pattern = "1">Pattern 1</button>
                 </div>
             </div>
             <div class="row  my-5 text-center justify-content-center">
                 <div class="col-sm-5 col-md-4 text-center justify-content-center">
-                    <button class="btn btn-dark btn-lg btn-block" id="pattern2">Pattern 2</button>
+                    <button class="btn btn-dark btn-lg btn-block" id="pattern2" data-pattern = "2">Pattern 2</button>
                 </div>
             </div>
             <div class="row  my-5 justify-content-center">
                 <div class="col-sm-5 col-md-4 text-center">
-                    <button class="btn btn-dark btn-lg btn-block" id="pattern3">Pattern 3</button>
+                    <button class="btn btn-dark btn-lg btn-block" id="pattern3" data-pattern = "3">Pattern 3</button>
                 </div>
             </div>
         </div>
 
     </div>
 </div>
-<div id="parameters" class="d-none" data-page="2">
+<div id="configurations" class="d-none" data-page="2">
     <div class="row mt-5 mb-0">
         <div class="col justify-content-center">
             <p class="text-center">Used actuators</p>
@@ -94,25 +101,25 @@
                 <div class="form-group mt-3">
                 <label for="cycleTime">Cycletime</label>
                 <input type="text" class="form-control" id="cycleTime" aria-describedby="cycleTimeHelp"
-                       placeholder="e.g. 3000">
+                       placeholder="e.g. 3000" value="">
                 <small id="cycleTimeHelp" class="form-text text-muted">in milliseconds</small>
             </div>
             </div>
             <div class="row justify-content-center">
                 <div class="form-group">
                     <label for="stepsInput">Steps</label>
-                    <input type="text" class="form-control" id="stepsInput" aria-describedby="stepsHelp" placeholder="e.g 8" value=steps>
+                    <input type="text" class="form-control" id="stepsInput" aria-describedby="stepsHelp" placeholder="e.g 8" value="">
                     <small id="stepsInputHelp" class="form-text text-muted">max. 10 steps</small>
                 </div>
-            </div>
+</div>
             <div class="row justify-content-center">
-                <button type="submit" class="btn btn-secondary" id="uploadButton">Upload</button>
+                <button type="submit" class="btn btn-secondary" id="saveConfigButton">Save</button>
             </div>
         </form>
     <div class="row justify-content-center text-center">
         <div class="alert alert-danger col-8 mt-4 d-none" role="alert">
             Too many steps!!
-        </div>
+    </div>
     </div>
 </div>
 <div id="patterns" class="d-none" data-page="3">

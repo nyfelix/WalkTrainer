@@ -1,4 +1,5 @@
-var walking = false;
+var stop = true;
+var url = "";
 var actuators = [0,0,0,0,0,0,0,0];
 var pinNumber = actuators.map(getPinNumber);
 var cycleTime = 0;
@@ -11,6 +12,7 @@ var clearSelected = false;
 var saveId = 0;
 var copyId = 0;
 var stepsInput = $("#stepsInput");
+var pinCount = pinNumber.length;
 
 var STEPS = [];
 for(var index = 0; index < maxSteps; index++){

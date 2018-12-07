@@ -24,31 +24,34 @@ window.onload = function() {
        })
 
    }
-   for(var index = 0; index < 3; index++){
+   for(var index = 1; index <= 3; index++){
        if(!(localStorage.getItem("save" + index) === null)){
-           patterns.save1 = JSON.parse(localStorage.getItem("save" + index));
+           patterns["save"+index] = parseInt(JSON.parse(localStorage.getItem("save" + index)));
        }
    }
 
     if(!(localStorage.getItem("steps") === null)){
-       steps = JSON.parse(localStorage.getItem("steps"));
+       steps = parseInt(JSON.parse(localStorage.getItem("steps")));
+        $('#stepsInput').val(steps);
     }
 
-
-   togglePatternButtons();/*else
-   {
-       localStorage.actuators = '';
-   }*/
+    if(!(localStorage.getItem("cycleTime") === null)){
+        cycleTime = parseInt(JSON.parse(localStorage.getItem("cycleTime")));
+        $('#cycleTime').val(cycleTime);
+    }
+    //$("[data-pattern]").prop("disabled",true);
+   togglePatternButtons();
    disableSaveButtons();
+    window.myLine.update();
 };
 
 function togglePatternButtons(){
-    if(walking === true){
-        $("#patternButtons button").attr('disabled',true);
+    if(stop == true){
+        $("[data-pattern]").attr('disabled',false);
     }
     else
     {
-        $("#patternButtons button").attr('disabled',false);
+        $("[data-pattern]").attr('disabled',true);
     }
 
 }
@@ -76,24 +79,36 @@ function disableSaveButtons(){
     }
 }
 
-$('#stepsInput').val(steps);
 
 //contol page
 
 $("#walkButton").click(function () {
-        walking = true;
-        console.log(walking);
+        stop = false;
+        console.log(stop);
         togglePatternButtons();
+    $.post("http://192.168.1.122/setPattern", JSON.stringify({stop: stop}), function( data ) {
+        console.log(data);
+    });
     }
 );
 
 $("#stopButton").click(function () {
-        walking = false;
-        console.log(walking);
+        stop = 1;
+        console.log(stop);
         togglePatternButtons();
+    $.post("http://192.168.1.122/setPattern", JSON.stringify({stop: stop}), function( data ) {
+        console.log(data);
+    });
     }
 );
 
+$("[data-pattern]").click(function () {
+    var patternId = $(this).attr("data-pattern");
+    $.post("http://192.168.1.122/setPattern", JSON.stringify({steps: steps, cycleTime: cycleTime, patterns: patterns["save" + patternId], pinNumber: pinNumber, countActuators: pinNumber.length}), function( data ) {
+        console.log(data);
+        });
+    console.log("Click Pattern" + patternId);
+});
 //Navigating without reloading page
 
 $("[data-nav]").click(function () {
@@ -103,7 +118,7 @@ $("[data-nav]").click(function () {
     $("[data-page]").addClass("d-none").filter("[data-page ="+pageId+"]").removeClass("d-none");
 });
 
-//paramters page
+//configurations page
 
 $('#actuatorButtons button').click(function() {
     $(this).toggleClass("active");
@@ -120,16 +135,18 @@ $('#actuatorButtons button').click(function() {
     console.log("Selected actuators "+actuators);
 });
 
-$("#uploadButton").click(function () {
+$("#saveConfigButton").click(function (e) {
+    e.preventDefault();
     console.log(stepsInput.val());
     if(stepsInput.val() > maxSteps)
     {
         $("div .alert").removeClass("d-none");
     }
-    else
+    else if(!(stepsInput.val() == ""))
     {
         $("div .alert").addClass("d-none");
         steps = stepsInput.val();
+        localStorage.setItem("steps",steps);
     }
     config.data.labels.splice(0,config.data.labels.length);
     for(var index = 0; index < steps; index++){
@@ -160,7 +177,10 @@ $("#uploadButton").click(function () {
         config.data.datasets.push(newDataset);
     }
     localStorage.setItem("actuators",JSON.stringify(actuators));
-    localStorage.setItem("steps",JSON.stringify(steps));
+    cycleTime = $("#cycleTime").val();
+    if(!($("#cycleTime").val() == "")){
+        localStorage.setItem("cycleTime", cycleTime);
+    }
     window.myLine.update();
 
 });
@@ -177,7 +197,6 @@ $("[data-save]").click(function () {
             }
             patterns['save'+saveId][index] = [];
             patterns['save' + saveId][index] = config.data.datasets[index].data.filter(copyArray);
-            localStorage.setItem("save"+saveId, JSON.stringify(patterns["save"+saveId]));
         }
         localStorage.setItem("save"+saveId, JSON.stringify(patterns["save"+saveId]));
         $("#saveButton").trigger("click");
