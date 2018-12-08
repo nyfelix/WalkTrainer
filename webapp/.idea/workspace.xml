@@ -14,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="5" column="72" lean-forward="false" selection-start-line="5" selection-start-column="72" selection-end-line="5" selection-end-column="72" />
+            <state relative-caret-position="1725">
+              <caret line="110" column="20" lean-forward="false" selection-start-line="110" selection-start-column="20" selection-end-line="110" selection-end-column="20" />
               <folding>
                 <element signature="n#nav#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -27,21 +27,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="functions.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="functions.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/functions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="42" column="23" lean-forward="false" selection-start-line="42" selection-start-column="3" selection-end-line="42" selection-end-column="23" />
+            <state relative-caret-position="-1518">
+              <caret line="33" column="54" lean-forward="false" selection-start-line="33" selection-start-column="54" selection-end-line="33" selection-end-column="54" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="n#!!block;n#enableSaveButtons#0" expanded="false" />
                 <element signature="n#!!block;n#disableSaveButtons#0" expanded="false" />
-                <element signature="e#3798#4060#0" expanded="false" />
-                <element signature="e#4106#5768#0" expanded="false" />
-                <element signature="e#7815#8235#0" expanded="false" />
-                <element signature="e#8275#8730#0" expanded="false" />
-                <element signature="e#8769#9253#0" expanded="false" />
-                <element signature="e#9293#9779#0" expanded="false" />
+                <element signature="e#3788#4050#0" expanded="false" />
+                <element signature="e#4096#5758#0" expanded="false" />
+                <element signature="e#7805#8225#0" expanded="false" />
+                <element signature="e#8265#8720#0" expanded="false" />
+                <element signature="e#8759#9243#0" expanded="false" />
+                <element signature="e#9283#9769#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -83,8 +83,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/js/functions.js" />
         <option value="$PROJECT_DIR$/js/definitions.js" />
+        <option value="$PROJECT_DIR$/js/functions.js" />
       </list>
     </option>
   </component>
@@ -166,16 +166,15 @@
       <workItem from="1543930362269" duration="6467000" />
       <workItem from="1544022101251" duration="15849000" />
       <workItem from="1544096357906" duration="9808000" />
-      <workItem from="1544176637243" duration="1355000" />
+      <workItem from="1544176637243" duration="3212000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54527000" />
+    <option name="totallyTimeSpent" value="56384000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24791667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -236,12 +235,12 @@
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#enableSaveButtons#0" expanded="false" />
             <element signature="n#!!block;n#disableSaveButtons#0" expanded="false" />
-            <element signature="e#3798#4060#0" expanded="false" />
-            <element signature="e#4106#5768#0" expanded="false" />
-            <element signature="e#7815#8235#0" expanded="false" />
-            <element signature="e#8275#8730#0" expanded="false" />
-            <element signature="e#8769#9253#0" expanded="false" />
-            <element signature="e#9293#9779#0" expanded="false" />
+            <element signature="e#3788#4050#0" expanded="false" />
+            <element signature="e#4096#5758#0" expanded="false" />
+            <element signature="e#7805#8225#0" expanded="false" />
+            <element signature="e#8265#8720#0" expanded="false" />
+            <element signature="e#8759#9243#0" expanded="false" />
+            <element signature="e#9283#9769#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -265,12 +264,12 @@
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#enableSaveButtons#0" expanded="false" />
             <element signature="n#!!block;n#disableSaveButtons#0" expanded="false" />
-            <element signature="e#3798#4060#0" expanded="false" />
-            <element signature="e#4106#5768#0" expanded="false" />
-            <element signature="e#7815#8235#0" expanded="false" />
-            <element signature="e#8275#8730#0" expanded="false" />
-            <element signature="e#8769#9253#0" expanded="false" />
-            <element signature="e#9293#9779#0" expanded="false" />
+            <element signature="e#3788#4050#0" expanded="false" />
+            <element signature="e#4096#5758#0" expanded="false" />
+            <element signature="e#7805#8225#0" expanded="false" />
+            <element signature="e#8265#8720#0" expanded="false" />
+            <element signature="e#8759#9243#0" expanded="false" />
+            <element signature="e#9283#9769#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -302,12 +301,12 @@
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#enableSaveButtons#0" expanded="false" />
             <element signature="n#!!block;n#disableSaveButtons#0" expanded="false" />
-            <element signature="e#3798#4060#0" expanded="false" />
-            <element signature="e#4106#5768#0" expanded="false" />
-            <element signature="e#7815#8235#0" expanded="false" />
-            <element signature="e#8275#8730#0" expanded="false" />
-            <element signature="e#8769#9253#0" expanded="false" />
-            <element signature="e#9293#9779#0" expanded="false" />
+            <element signature="e#3788#4050#0" expanded="false" />
+            <element signature="e#4096#5758#0" expanded="false" />
+            <element signature="e#7805#8225#0" expanded="false" />
+            <element signature="e#8265#8720#0" expanded="false" />
+            <element signature="e#8759#9243#0" expanded="false" />
+            <element signature="e#9283#9769#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -347,12 +346,12 @@
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#enableSaveButtons#0" expanded="false" />
             <element signature="n#!!block;n#disableSaveButtons#0" expanded="false" />
-            <element signature="e#3798#4060#0" expanded="false" />
-            <element signature="e#4106#5768#0" expanded="false" />
-            <element signature="e#7815#8235#0" expanded="false" />
-            <element signature="e#8275#8730#0" expanded="false" />
-            <element signature="e#8769#9253#0" expanded="false" />
-            <element signature="e#9293#9779#0" expanded="false" />
+            <element signature="e#3788#4050#0" expanded="false" />
+            <element signature="e#4096#5758#0" expanded="false" />
+            <element signature="e#7805#8225#0" expanded="false" />
+            <element signature="e#8265#8720#0" expanded="false" />
+            <element signature="e#8759#9243#0" expanded="false" />
+            <element signature="e#9283#9769#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -384,12 +383,12 @@
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#enableSaveButtons#0" expanded="false" />
             <element signature="n#!!block;n#disableSaveButtons#0" expanded="false" />
-            <element signature="e#3798#4060#0" expanded="false" />
-            <element signature="e#4106#5768#0" expanded="false" />
-            <element signature="e#7815#8235#0" expanded="false" />
-            <element signature="e#8275#8730#0" expanded="false" />
-            <element signature="e#8769#9253#0" expanded="false" />
-            <element signature="e#9293#9779#0" expanded="false" />
+            <element signature="e#3788#4050#0" expanded="false" />
+            <element signature="e#4096#5758#0" expanded="false" />
+            <element signature="e#7805#8225#0" expanded="false" />
+            <element signature="e#8265#8720#0" expanded="false" />
+            <element signature="e#8759#9243#0" expanded="false" />
+            <element signature="e#9283#9769#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -421,30 +420,12 @@
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#enableSaveButtons#0" expanded="false" />
             <element signature="n#!!block;n#disableSaveButtons#0" expanded="false" />
-            <element signature="e#3798#4060#0" expanded="false" />
-            <element signature="e#4106#5768#0" expanded="false" />
-            <element signature="e#7815#8235#0" expanded="false" />
-            <element signature="e#8275#8730#0" expanded="false" />
-            <element signature="e#8769#9253#0" expanded="false" />
-            <element signature="e#9293#9779#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/functions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="42" column="23" lean-forward="false" selection-start-line="42" selection-start-column="3" selection-end-line="42" selection-end-column="23" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="n#!!block;n#enableSaveButtons#0" expanded="false" />
-            <element signature="n#!!block;n#disableSaveButtons#0" expanded="false" />
-            <element signature="e#3798#4060#0" expanded="false" />
-            <element signature="e#4106#5768#0" expanded="false" />
-            <element signature="e#7815#8235#0" expanded="false" />
-            <element signature="e#8275#8730#0" expanded="false" />
-            <element signature="e#8769#9253#0" expanded="false" />
-            <element signature="e#9293#9779#0" expanded="false" />
+            <element signature="e#3788#4050#0" expanded="false" />
+            <element signature="e#4096#5758#0" expanded="false" />
+            <element signature="e#7805#8225#0" expanded="false" />
+            <element signature="e#8265#8720#0" expanded="false" />
+            <element signature="e#8759#9243#0" expanded="false" />
+            <element signature="e#9283#9769#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -459,11 +440,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="5" column="72" lean-forward="false" selection-start-line="5" selection-start-column="72" selection-end-line="5" selection-end-column="72" />
+        <state relative-caret-position="1725">
+          <caret line="110" column="20" lean-forward="false" selection-start-line="110" selection-start-column="20" selection-end-line="110" selection-end-column="20" />
           <folding>
             <element signature="n#nav#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/functions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1518">
+          <caret line="33" column="54" lean-forward="false" selection-start-line="33" selection-start-column="54" selection-end-line="33" selection-end-column="54" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!block;n#enableSaveButtons#0" expanded="false" />
+            <element signature="n#!!block;n#disableSaveButtons#0" expanded="false" />
+            <element signature="e#3788#4050#0" expanded="false" />
+            <element signature="e#4096#5758#0" expanded="false" />
+            <element signature="e#7805#8225#0" expanded="false" />
+            <element signature="e#8265#8720#0" expanded="false" />
+            <element signature="e#8759#9243#0" expanded="false" />
+            <element signature="e#9283#9769#0" expanded="false" />
           </folding>
         </state>
       </provider>

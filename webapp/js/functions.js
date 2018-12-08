@@ -26,7 +26,7 @@ window.onload = function() {
    }
    for(var index = 1; index <= 3; index++){
        if(!(localStorage.getItem("save" + index) === null)){
-           patterns["save"+index] = parseInt(JSON.parse(localStorage.getItem("save" + index)));
+           patterns["save"+index] = JSON.parse(localStorage.getItem("save" + index));
        }
    }
 
