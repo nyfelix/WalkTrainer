@@ -14,11 +14,11 @@
     <script src="chartjs-plugin-dragData-master/dist/chartjs-plugin-dragData.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-sm navbar-light bg-dark py-0">
-    <div class="container">
+<nav class="navbar navbar-expand-sm navbar-light bg-dark py-0 pr-0">
+    <div class="container mr-0 pr-0 ml-1">
         <div class="navbar-brand text-white">Laufsystem UI</div>
-        <div class="navbar-nav">
-            <ul class="nav justify-content-center">
+        <div class="navbar-nav justify-content-end">
+            <ul class="nav">
                 <li id="nav-controls" class="nav-item p-1 border border-bottom-0 border-secondary bg-secondary" data-nav="1"><a
                         class="nav-item nav-link text-white" href="#">Controls</a></li>
                 <li id="nav-configurations" class="nav-item p-1 border border-bottom-0 border-secondary " data-nav="2"><a
@@ -33,7 +33,7 @@
     <div class="container-fluid">
         <div class="row my-5"></div>
         <div class="row my-5 justify-content-around">
-            <div class ="col-3">
+            <div class="col-3">
 
             </div>
             <div class="col-3 col-md-2 text-center">
@@ -47,9 +47,9 @@
         </div>
         <div class="row justify-content-center">
             <div class="form-group text-center">
-                <label for="urlInput">URL</label>
-                <input type="text" class="form-control" id="urlInput" aria-describedby="stepsHelp" placeholder="e.g. 192.168.0.100/setPattern" value="">
-                <small id="urlInputHelp" class="form-text text-muted">type in the url of your adafruit and add /setPattern</small>
+                <label for="ipInput">URL</label>
+                <input type="text" class="form-control" id="ipInput" aria-describedby="ipInputHelp" placeholder="e.g. 192.168.0.100" value="">
+                <small id="ipInputHelp" class="form-text text-muted">type in the IP of your adafruit without http://</small>
             </div>
         </div>
         <div class="row">

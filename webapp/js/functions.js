@@ -15,31 +15,39 @@ window.onload = function() {
         }
     }*/
 
-   if(!(localStorage.getItem("actuators") === null)){
+   if(localStorage.getItem("actuators") !== null){
        actuators = JSON.parse(localStorage.getItem("actuators"));
        actuators.forEach(function (value,index,array) {
            if(array[index] == 1){
                $("[data-actuator = "+index+"]").addClass('active');
            }
        })
-
+       pinNumber = actuators.map(getPinNumber);
+       pinNumber.sort(function(a, b){return a - b});
+       pinNumber = pinNumber.filter(reduceArray);
    }
+
    for(var index = 1; index <= 3; index++){
-       if(!(localStorage.getItem("save" + index) === null)){
+       if(localStorage.getItem("save" + index) !== null){
            patterns["save"+index] = JSON.parse(localStorage.getItem("save" + index));
        }
    }
 
-    if(!(localStorage.getItem("steps") === null)){
+    if(localStorage.getItem("steps") !== null){
        steps = parseInt(JSON.parse(localStorage.getItem("steps")));
         $('#stepsInput').val(steps);
     }
 
-    if(!(localStorage.getItem("cycleTime") === null)){
+    if(localStorage.getItem("cycleTime") !== null){
         cycleTime = parseInt(JSON.parse(localStorage.getItem("cycleTime")));
         $('#cycleTime').val(cycleTime);
     }
-    //$("[data-pattern]").prop("disabled",true);
+
+    if(localStorage.getItem("ipAdress") !== null){
+       ipAdress = JSON.parse(localStorage.getItem("ipAdress"));
+       $("#ipInput").val(ipAdress);
+    }
+
    togglePatternButtons();
    disableSaveButtons();
     window.myLine.update();
@@ -48,10 +56,14 @@ window.onload = function() {
 function togglePatternButtons(){
     if(stop == true){
         $("[data-pattern]").attr('disabled',false);
+        $("#walkButton").attr('disabled',false);
+        $("#stopButton").attr('disabled',true);
     }
     else
     {
         $("[data-pattern]").attr('disabled',true);
+        $("#walkButton").attr('disabled',true);
+        $("#stopButton").attr('disabled',false);
     }
 
 }
@@ -59,6 +71,13 @@ function togglePatternButtons(){
 function enableSaveButtons(){
     var tmpString;
     var saveName;
+
+    // for (key in patterns) {
+    //     if (!patterns.hasOwnProperty(key)) continue;
+    //
+    //
+    // }
+
     for(var index = 0; index < Object.keys(patterns).length; index++){
         tmpString = index + 1;
         saveName = "#save" + tmpString;
@@ -102,11 +121,20 @@ $("#stopButton").click(function () {
     }
 );
 
+
 $("[data-pattern]").click(function () {
     var patternId = $(this).attr("data-pattern");
-    $.post("http://192.168.1.122/setPattern", JSON.stringify({steps: steps, cycleTime: cycleTime, patterns: patterns["save" + patternId], pinNumber: pinNumber, countActuators: pinNumber.length}), function( data ) {
+    ipAdress = $("#ipInput").val();
+    localStorage.setItem("ipAdress", JSON.stringify(ipAdress));
+    $.post("http://" + ipAdress + "/setPattern", JSON.stringify({
+        steps: steps,
+        cycleTime: cycleTime,
+        patterns: patterns["save" + patternId],
+        pinNumber: pinNumber,
+        countActuators: pinNumber.length
+    }), function (data) {
         console.log(data);
-        });
+    });
     console.log("Click Pattern" + patternId);
 });
 //Navigating without reloading page
@@ -190,6 +218,13 @@ $("[data-save]").click(function () {
     saveId = $(this).attr('data-save');
     console.log("SaveID: " + saveId);
 
+    if(saveSelected == false && copySelected == false && clearSelected == false){
+        for(var index = 0; index <pinNumber.length; index++){
+            config.data.datasets[index].data = [];
+            config.data.datasets[index].data = patterns['save'+saveId][index].filter(copyArray);
+        }
+    }
+
     if(saveSelected == true){
         for(var index = 0; index <pinNumber.length; index++){
             for(var j = 0; j < config.data.datasets[index].data.length; j++){
@@ -221,12 +256,14 @@ $("[data-save]").click(function () {
         $("#copyModal").modal('show').attr('data-selected', saveId);
     }
 
-    if(saveSelected == false && copySelected == false && clearSelected == false){
-        for(var index = 0; index <pinNumber.length; index++){
-            config.data.datasets[index].data = [];
-            config.data.datasets[index].data = patterns['save'+saveId][index].filter(copyArray);
-        }
+    if(clearSelected == true){
+
+       patterns['save'+saveId] = [];
+       localStorage.removeItem("save"+saveId);
+       $("#clearButton").trigger("click");
     }
+
+
 
     disableSaveButtons();
     //console.log($(this).attr("id"));
