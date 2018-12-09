@@ -12,8 +12,8 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug",
-            "executable": "c:/Users/Bharath/Documents/GitHub/WalkTrainer/embedded/.pioenvs/huzzah/firmware.elf",
-            "toolchainBinDir": "",
+            "executable": "/Users/bharath/Documents/GitHub/WalkTrainer/embedded/.pioenvs/huzzah/firmware.elf",
+            "toolchainBinDir": "/Users/bharath/.platformio/packages/toolchain-xtensa/bin",
             "preLaunchTask": {
                 "type": "PlatformIO",
                 "task": "Pre-Debug"
@@ -24,8 +24,8 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (skip Pre-Debug)",
-            "executable": "c:/Users/Bharath/Documents/GitHub/WalkTrainer/embedded/.pioenvs/huzzah/firmware.elf",
-            "toolchainBinDir": "",
+            "executable": "/Users/bharath/Documents/GitHub/WalkTrainer/embedded/.pioenvs/huzzah/firmware.elf",
+            "toolchainBinDir": "/Users/bharath/.platformio/packages/toolchain-xtensa/bin",
             "internalConsoleOptions": "openOnSessionStart"
         }
     ]
