@@ -22,7 +22,7 @@ int stepsDone = 0;
 double cycleTime = 1000;
 double stepTime = cycleTime / steps;
 double startTime;
-bool quit = true;
+bool stop = true;
 //int servos[4] = {0,2,4,6}
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
@@ -40,7 +40,7 @@ void callbackPost(JsonObject &content)
     }
     if (content.containsKey("stop"))
     {
-        quit = content["stop"].as<bool>();
+        stop = content["stop"].as<bool>();
     }
     
 
@@ -72,7 +72,7 @@ void callbackPost(JsonObject &content)
         }
     }
     }
-    Serial.println(quit);
+    Serial.println(stop);
 }
 
 void setup()
@@ -108,9 +108,8 @@ void setup()
 
 void loop()
 {
-    if (quit == false)
+    if (stop == false)
     {
-        loopApi();
         Serial.println(stepTime);
         posTesting(targetPos, steps, countActuators, pinNr, currentStep, currentPos);
 
@@ -124,13 +123,14 @@ void loop()
             }
         }
         Serial.println(currentStep);
+        loopApi();
     }
     else
     {
         loopApi();
-        startTime = millis();
         currentStep = 0; 
-        stepsDone = 0; 
+        stepsDone = 0;
+        startTime = millis(); 
     }
 }
 
@@ -158,23 +158,15 @@ void posTesting(const double mat[MAX_ACTUATORS][MAX_STEPS], const int nrSteps, c
 {
     for (int index = 0; index < nrActuators; index++)
     {
-
-            if (currStep == (nrSteps - 1))
-            {
-                if (!(mat[index][0] - mat[index][currStep]) == 0)
-                {
-                    currPos[index] = ((mat[index][0] - mat[index][currStep]) / stepTime) * (millis() - startTime - stepsDone * stepTime) + targetPos[index][currStep];
-                }
-                pwm.setPWM(usedPins[index], 0, currPos[index]);
-            }
-            else
-            {
-                if (!(mat[index][currStep + 1] - mat[index][currStep]) == 0)
-                {
-                    currPos[index] = ((mat[index][currStep + 1] - mat[index][currStep]) / stepTime) * (millis() - startTime - stepsDone * stepTime) + mat[index][currStep];
-                }
-                pwm.setPWM(usedPins[index], 0, currPos[index]);
-            }
-        
+        if (currStep == (nrSteps - 1))
+        {
+            currPos[index] = ((mat[index][0] - mat[index][currStep]) / stepTime) * (millis() - startTime - stepsDone * stepTime) + mat[index][currStep];
+            pwm.setPWM(usedPins[index], 0, currPos[index]);
+        }
+        else
+        {
+            currPos[index] = ((mat[index][currStep + 1] - mat[index][currStep]) / stepTime) * (millis() - startTime - stepsDone * stepTime) + mat[index][currStep];
+            pwm.setPWM(usedPins[index], 0, currPos[index]);
+        }
     }
 }
