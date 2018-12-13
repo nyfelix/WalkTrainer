@@ -1,5 +1,11 @@
 //Setup
 //creating the chart on loading
+$(document).ready(function () {
+    $("#successAlert").hide();
+    $("#successAlert").removeClass("d-none");               //otherwise you''ll see the alert shortly at the beginning
+    }
+);
+
 window.onload = function() {
     var ctx = document.getElementById('canvas').getContext('2d');
     window.myLine = new Chart(ctx, config);
@@ -14,7 +20,6 @@ window.onload = function() {
             $(saveName).prop('disabled',true);
         }
     }*/
-
    if(localStorage.getItem("actuators") !== null){
        actuators = JSON.parse(localStorage.getItem("actuators"));
        actuators.forEach(function (value,index,array) {
@@ -126,15 +131,23 @@ $("[data-pattern]").click(function () {
     var patternId = $(this).attr("data-pattern");
     ipAdress = $("#ipInput").val();
     localStorage.setItem("ipAdress", JSON.stringify(ipAdress));
-    $.post("http://" + ipAdress + "/setPattern", JSON.stringify({
-        steps: steps,
-        cycleTime: cycleTime,
-        patterns: patterns["save" + patternId],
-        pinNumber: pinNumber,
-        countActuators: pinNumber.length
-    }), function (data) {
-        console.log(data);
-    });
+        $.post("http://" + ipAdress + "/setPattern", JSON.stringify({
+            steps: steps,
+            cycleTime: cycleTime,
+            patterns: patterns["save" + patternId],
+            pinNumber: pinNumber,
+            countActuators: pinNumber.length
+        }), function (data) {
+            console.log(data);
+            if(data.result == true){
+                $("#successAlert").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#successAlert").slideUp(500);
+                });
+            }
+        });
+
+
+
     console.log("Click Pattern" + patternId);
 });
 //Navigating without reloading page
@@ -168,11 +181,12 @@ $("#saveConfigButton").click(function (e) {
     console.log(stepsInput.val());
     if(stepsInput.val() > maxSteps)
     {
-        $("div .alert").removeClass("d-none");
+        $("#stepsAlert").removeClass("d-none");
+        return;
     }
-    else if(!(stepsInput.val() == ""))
+    else if(stepsInput.val() != "")
     {
-        $("div .alert").addClass("d-none");
+        $("#stepsAlert").addClass("d-none");
         steps = stepsInput.val();
         localStorage.setItem("steps",steps);
     }

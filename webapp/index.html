@@ -15,9 +15,9 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-sm navbar-light bg-dark py-0 pr-0">
-    <div class="container mr-0 pr-0 ml-1">
-        <div class="navbar-brand text-white">Laufsystem UI</div>
-        <div class="navbar-nav justify-content-end">
+    <div class="container mr-0 pr-0 ml-1 justify-content-end">
+        <div class="navbar-brand text-white mr-auto">Laufsystem UI</div>
+        <div class="navbar-nav ml-auto">
             <ul class="nav">
                 <li id="nav-controls" class="nav-item p-1 border border-bottom-0 border-secondary bg-secondary" data-nav="1"><a
                         class="nav-item nav-link text-white" href="#">Controls</a></li>
@@ -53,6 +53,11 @@
             </div>
         </div>
         <div class="row">
+        </div>
+        <div class="row justify-content-center text-center">
+            <div class="alert alert-success col-8 mt-4 d-none"  id="successAlert" role="alert">
+                Upload succeeded!
+            </div>
         </div>
         <div class="row my-1 my-md-2"></div>
         <div class="row my-1 my-md-2"></div>
@@ -117,7 +122,7 @@
             </div>
         </form>
     <div class="row justify-content-center text-center">
-        <div class="alert alert-danger col-8 mt-4 d-none" role="alert">
+        <div class="alert alert-danger col-8 mt-4 d-none"  id="stepsAlert" role="alert">
             Too many steps!!
     </div>
     </div>
@@ -151,13 +156,7 @@
                 <button class="btn btn-primary btn-lg btn-block" data-manip="3" id="clearButton">Clear</button>
             </div>
         </div>
-        <!--<div class="row mt-3 justify-content-center">
-            <div class="col-4">
-                <button class="btn btn-secondary btn-lg btn-block d-none" id="cancelButton">Cancel</button>
-            </div>
-        </div>-->
     </div>
-
     <div class="modal fade" id="copyModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-selected=0>
         <div class="modal-dialog" role="document">
             <div class="modal-content">
