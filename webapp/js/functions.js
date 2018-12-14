@@ -110,7 +110,8 @@ $("#walkButton").click(function () {
         stop = false;
         console.log(stop);
         togglePatternButtons();
-    $.post("http://192.168.1.122/setPattern", JSON.stringify({stop: stop}), function( data ) {
+    ipAdress = $("#ipInput").val();
+    $.post("http://" + ipAdress + "/setPattern", JSON.stringify({stop: stop}), function( data ) {
         console.log(data);
     });
     }
@@ -120,7 +121,8 @@ $("#stopButton").click(function () {
         stop = 1;
         console.log(stop);
         togglePatternButtons();
-    $.post("http://192.168.1.122/setPattern", JSON.stringify({stop: stop}), function( data ) {
+    ipAdress = $("#ipInput").val();
+    $.post("http://" + ipAdress + "/setPattern", JSON.stringify({stop: stop}), function( data ) {
         console.log(data);
     });
     }
