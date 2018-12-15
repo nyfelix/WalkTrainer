@@ -1,8 +1,8 @@
 //Setup
 //creating the chart on loading
 $(document).ready(function () {
-    $("#successAlert").hide();
-    $("#successAlert").removeClass("d-none");               //otherwise you''ll see the alert shortly at the beginning
+    $("#successAlert").hide().removeClass("d-none"); //otherwise you''ll see the alert shortly at the beginning
+    $("#failAlert").hide().removeClass("d-none");
     }
 );
 
@@ -133,23 +133,34 @@ $("[data-pattern]").click(function () {
     var patternId = $(this).attr("data-pattern");
     ipAdress = $("#ipInput").val();
     localStorage.setItem("ipAdress", JSON.stringify(ipAdress));
-        $.post("http://" + ipAdress + "/setPattern", JSON.stringify({
-            steps: steps,
-            cycleTime: cycleTime,
-            patterns: patterns["save" + patternId],
-            pinNumber: pinNumber,
-            countActuators: pinNumber.length
-        }), function (data) {
-            console.log(data);
-            if(data.result == true){
-                $("#successAlert").fadeTo(2000, 500).slideUp(500, function(){
-                    $("#successAlert").slideUp(500);
-                });
-            }
+    $("#spinner").removeClass("d-none");
+    $("#content").addClass("disable-content");
+    $.ajaxSetup({
+        timeout: 5000
+    });
+    $.post("http://" + ipAdress + "/setPattern", JSON.stringify({
+        steps: steps,
+        cycleTime: cycleTime,
+        patterns: patterns["save" + patternId],
+        pinNumber: pinNumber,
+        countActuators: pinNumber.length
+    }), function (data) {
+        console.log(data);
+        $("#spinner").addClass("d-none");
+        $("#content").removeClass("disable-content");
+        if (data.result == true) {
+            $("#successAlert").fadeTo(2000, 500).slideUp(500, function () {
+                $("#successAlert").slideUp(500);
+            });
+        }
+    }).fail(function () {
+        console.log("fail");
+        $("#spinner").addClass("d-none");
+        $("#content").removeClass("disable-content");
+        $("#failAlert").fadeTo(2000, 500).slideUp(500, function () {
+            $("#failAlert").slideUp(500);
         });
-
-
-
+    });
     console.log("Click Pattern" + patternId);
 });
 //Navigating without reloading page
