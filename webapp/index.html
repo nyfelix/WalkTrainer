@@ -46,13 +46,23 @@
             <div class ="col-3">
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="form-group text-center">
-                <label for="ipInput">URL</label>
-                <input type="text" class="form-control" id="ipInput" aria-describedby="ipInputHelp" placeholder="e.g. 192.168.0.100" value="">
-                <small id="ipInputHelp" class="form-text text-muted">type in the IP of your adafruit without http://</small>
+        <form>
+            <div class="row justify-content-center">
+                <div class="form-group text-center">
+                    <label for="ipInput">URL</label>
+                    <input type="text" class="form-control" id="ipInput" aria-describedby="ipInputHelp" placeholder="e.g. 192.168.0.100" value="">
+                    <small id="ipInputHelp" class="form-text text-muted">type in the IP of your adafruit without http://</small>
+                </div>
             </div>
-        </div>
+            <div class="row justify-content-center">
+                <div class="form-group mt-1 col-2 text-center">
+                    <label for="cycleTime">Cycletime</label>
+                    <input type="number" class="form-control" id="cycleTime" aria-describedby="cycleTimeHelp"
+                           placeholder="e.g. 3000" value="">
+                    <small id="cycleTimeHelp" class="form-text text-muted">in milliseconds</small>
+                </div>
+            </div>
+        </form>
         <div class="row">
         </div>
         <div class="row justify-content-center text-center">
@@ -61,13 +71,10 @@
             </div>
         </div>
         <div class="row justify-content-center text-center">
-            <div class="alert alert-danger col-8 mt-4 d-none"  id="failAlert" role="alert">
+            <div class="alert alert-danger col-8 mt-4 d-none"  id="failAlert" role="alert" style="z-index: 3">
                 Upload failed!
             </div>
         </div>
-        <div class="row my-1 my-md-2"></div>
-        <div class="row my-1 my-md-2"></div>
-        <div class="row my-1 my-md-2"></div>
         <div class="row my-1 my-md-2"></div>
         <div id="patternButtons">
             <div class="row my-5 justify-content-center">
@@ -82,7 +89,7 @@
             </div>
             <div class="row  my-5 justify-content-center">
                 <div class="col-sm-5 col-md-4 text-center">
-                    <button class="btn btn-dark btn-lg btn-block" id="pattern3" data-pattern = "3">Pattern 3</button>
+                    <button class="btn btn-dark btn-lg btn-block" id="pattern3" data-pattern="3">Pattern 3</button>
                 </div>
             </div>
         </div>
@@ -108,85 +115,115 @@
         </div>
     </div>
         <form>
-            <div class="row justify-content-center">
-                <div class="form-group mt-3">
-                <label for="cycleTime">Cycletime</label>
-                <input type="text" class="form-control" id="cycleTime" aria-describedby="cycleTimeHelp"
-                       placeholder="e.g. 3000" value="">
-                <small id="cycleTimeHelp" class="form-text text-muted">in milliseconds</small>
-            </div>
-            </div>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mt-3">
                 <div class="form-group">
                     <label for="stepsInput">Steps</label>
-                    <input type="text" class="form-control" id="stepsInput" aria-describedby="stepsHelp" placeholder="e.g 8" value="">
+                    <input type="number" class="form-control" id="stepsInput" aria-describedby="stepsHelp" placeholder="e.g 8" value="">
                     <small id="stepsInputHelp" class="form-text text-muted">max. 10 steps</small>
                 </div>
-</div>
+            </div>
             <div class="row justify-content-center">
                 <button type="submit" class="btn btn-secondary" id="saveConfigButton">Save</button>
             </div>
         </form>
     <div class="row justify-content-center text-center">
-        <div class="alert alert-danger col-8 mt-4 d-none"  id="stepsAlert" role="alert">
+        <div class="alert alert-danger col-8 mt-4 d-none" id="stepsAlert" role="alert">
             Too many steps!!
-    </div>
-    </div>
-</div>
-<div id="patterns" class="d-none" data-page="3">
-    <div class="row">
-        <div class="col-11 py-5 h-50">
-            <canvas id="canvas"></canvas>
-        </div>
-    </div>
-    <div id="patternsManipulateButtons">
-        <div class="row justify-content-around mt-3">
-            <div class="col-4">
-                <button class="btn btn-dark btn-lg btn-block " data-save="1" id="save1">Pattern 1</button>
-            </div>
-            <div class="col-4">
-                <button class="btn btn-dark btn-lg btn-block" data-save="2" id="save2">Pattern 2</button>
-            </div>
-            <div class="col-4">
-                <button class="btn btn-dark btn-lg btn-block" data-save="3" id="save3">Pattern 3</button>
-            </div>
-        </div>
-        <div class="row justify-content-around mt-3">
-            <div class="col-4">
-                <button class="btn btn-success btn-lg btn-block " data-manip="1" id="saveButton">Save to</button>
-            </div>
-            <div class="col-4">
-                <button class="btn btn-warning btn-lg btn-block " data-manip="2" id="copyButton">Copy</button>
-            </div>
-            <div class="col-4">
-                <button class="btn btn-primary btn-lg btn-block" data-manip="3" id="clearButton">Clear</button>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="copyModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-selected=0>
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Copying one pattern to another</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Choose save slot</p>
-                </div>
-                <div class="modal-footer row justify-content-around">
-                        <div class="col-4">
-                            <button type="button" class="btn btn-dark btn-block" data-dismiss="modal" data-copy="0" id="firstCopyButton"></button>
-                        </div>
-                        <div class="col-4">
-                            <button type="button" class="btn btn-dark btn-block" data-dismiss="modal" data-copy="0" id="secondCopyButton"></button>
-                        </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
+    <div id="patterns" class="d-none" data-page="3">
+        <div class="row">
+            <div class="col-11 py-5 h-50">
+                <div id="toggleExpMode" class="row justify-content-end">
+                    <div class="col-1">
+                        Experimental mode
+                    </div>
+                    <div class="col-1 ml-sm-5 ml-lg-3">
+                        <label class="switch">
+                            <input type="checkbox" id="toggleButton">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                <canvas id="canvas"></canvas>
+            </div>
+        </div>
+        <div class="d-none" id="expButtons">
+            <div class="row justify-content-end">
+                <div class="col-4 text-center mb-0">
+                    <label for="expCycleTime">Cycletime</label>
+                </div>
+            </div>
+            <div class="row justify-content-around align-items-start mt-3">
+                <div class="col-4">
+                    <button class="btn btn-success btn-lg btn-block" id="expWalkButton">Walk</button>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-danger btn-lg btn-block" id="expStopButton">Stop</button>
+                </div>
+                <div class="col-4">
+                    <form>
+                        <div class="form-group">
+                            <input type="number" class="form-control" id="expCycleTime" aria-describedby="cycleTimeHelp"
+                                   placeholder="Cycletime in milliseconds" value="">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="patternsManipulateButtons">
+            <div class="row justify-content-around mt-3">
+                <div class="col-4">
+                    <button class="btn btn-dark btn-lg btn-block " data-save="1" id="save1">Pattern 1</button>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-dark btn-lg btn-block" data-save="2" id="save2">Pattern 2</button>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-dark btn-lg btn-block" data-save="3" id="save3">Pattern 3</button>
+                </div>
+            </div>
+            <div class="row justify-content-around mt-3">
+                <div class="col-4">
+                    <button class="btn btn-success btn-lg btn-block " data-manip="1" id="saveButton">Save to</button>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-warning btn-lg btn-block " data-manip="2" id="copyButton">Copy</button>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-primary btn-lg btn-block" data-manip="3" id="clearButton">Clear</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="copyModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+             aria-hidden="true" data-selected=0>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Copying one pattern to another</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Choose save slot</p>
+                    </div>
+                    <div class="modal-footer row justify-content-around">
+                        <div class="col-4">
+                            <button type="button" class="btn btn-dark btn-block" data-dismiss="modal" data-copy="0"
+                                    id="firstCopyButton"></button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-dark btn-block" data-dismiss="modal" data-copy="0"
+                                    id="secondCopyButton"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div id="spinner" class="sk-folding-cube d-none">
     <div class="sk-cube1 sk-cube"></div>

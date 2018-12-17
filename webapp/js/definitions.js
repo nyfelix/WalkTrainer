@@ -14,6 +14,7 @@ var copyId = 0;
 var stepsInput = $("#stepsInput");
 var pinCount = pinNumber.length;
 var ipAdress;
+var expMode = false;
 
 var STEPS = [];
 for(var index = 0; index < maxSteps; index++){

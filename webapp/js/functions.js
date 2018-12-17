@@ -46,11 +46,18 @@ window.onload = function() {
     if(localStorage.getItem("cycleTime") !== null){
         cycleTime = parseInt(JSON.parse(localStorage.getItem("cycleTime")));
         $('#cycleTime').val(cycleTime);
+        $('#expCycleTime').val(cycleTime);
     }
 
     if(localStorage.getItem("ipAdress") !== null){
        ipAdress = JSON.parse(localStorage.getItem("ipAdress"));
        $("#ipInput").val(ipAdress);
+    }
+
+    if(localStorage.getItem("expMode") !== null){
+        expMode = JSON.parse(localStorage.getItem("expMode"));
+        document.getElementById("toggleButton").checked= expMode;
+        $("#toggleButton").trigger("change");
     }
 
    togglePatternButtons();
@@ -61,14 +68,14 @@ window.onload = function() {
 function togglePatternButtons(){
     if(stop == true){
         $("[data-pattern]").attr('disabled',false);
-        $("#walkButton").attr('disabled',false);
-        $("#stopButton").attr('disabled',true);
+        $("#walkButton, #expWalkButton").attr('disabled',false);
+        $("#stopButton, #expStopButton").attr('disabled',true);
     }
     else
     {
         $("[data-pattern]").attr('disabled',true);
-        $("#walkButton").attr('disabled',true);
-        $("#stopButton").attr('disabled',false);
+        $("#walkButton, #expWalkButton").attr('disabled',true);
+        $("#stopButton, #expStopButton").attr('disabled',false);
     }
 
 }
@@ -106,10 +113,11 @@ function disableSaveButtons(){
 
 //contol page
 
-$("#walkButton").click(function () {
+$("#walkButton,#expWalkButton").click(function () {
         stop = false;
-        console.log(stop);
+        console.log("Walk");
         togglePatternButtons();
+        $("#patternsManipulateButtons button").attr("disabled",true);
     ipAdress = $("#ipInput").val();
     $.post("http://" + ipAdress + "/setPattern", JSON.stringify({stop: stop}), function( data ) {
         console.log(data);
@@ -117,10 +125,12 @@ $("#walkButton").click(function () {
     }
 );
 
-$("#stopButton").click(function () {
-        stop = 1;
+$("#stopButton,#expStopButton").click(function () {
+        stop = true;
         console.log(stop);
         togglePatternButtons();
+        $("#patternsManipulateButtons button").attr("disabled",false);
+        disableSaveButtons();
     ipAdress = $("#ipInput").val();
     $.post("http://" + ipAdress + "/setPattern", JSON.stringify({stop: stop}), function( data ) {
         console.log(data);
@@ -133,6 +143,10 @@ $("[data-pattern]").click(function () {
     var patternId = $(this).attr("data-pattern");
     ipAdress = $("#ipInput").val();
     localStorage.setItem("ipAdress", JSON.stringify(ipAdress));
+    cycleTime = $("#cycleTime").val();
+    if(!($("#cycleTime").val() == "")){
+        localStorage.setItem("cycleTime", cycleTime);
+    }
     $("#spinner").removeClass("d-none");
     $("#content").addClass("disable-content");
     $.ajaxSetup({
@@ -232,14 +246,22 @@ $("#saveConfigButton").click(function (e) {
         config.data.datasets.push(newDataset);
     }
     localStorage.setItem("actuators",JSON.stringify(actuators));
-    cycleTime = $("#cycleTime").val();
-    if(!($("#cycleTime").val() == "")){
-        localStorage.setItem("cycleTime", cycleTime);
-    }
     window.myLine.update();
 
 });
 //patterns page
+
+$("#toggleButton").on('change', function() {
+    if ($(this).is(':checked')) {
+        $("#expButtons").removeClass("d-none");
+        expMode = true;
+        localStorage.setItem("expMode", JSON.stringify(expMode));
+    }
+    else {
+        $("#expButtons").addClass("d-none");
+        expMode = false;
+        localStorage.setItem("expMode", JSON.stringify(expMode));
+    }});
 
 $("[data-save]").click(function () {
     saveId = $(this).attr('data-save');
@@ -249,6 +271,13 @@ $("[data-save]").click(function () {
         for(var index = 0; index <pinNumber.length; index++){
             config.data.datasets[index].data = [];
             config.data.datasets[index].data = patterns['save'+saveId][index].filter(copyArray);
+        }
+        if(expMode){
+            cycleTime = $("#expCycleTime").val();
+            if(!($("#cycleTime").val() == "")){
+                localStorage.setItem("cycleTime", cycleTime);
+            }
+            $("[data-pattern ="+saveId+"]").trigger("click");
         }
     }
 
