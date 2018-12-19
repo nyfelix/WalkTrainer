@@ -67,7 +67,12 @@ window.onload = function() {
 
 function togglePatternButtons(){
     if(stop == true){
-        $("[data-pattern]").attr('disabled',false);
+        for(var index = 1; index <= 3; index++){
+            if(patterns["save"+(index)] !== undefined && patterns["save"+(index)] != 0){
+                $("[data-pattern = "+index+"]").attr('disabled',false);
+                console.log("Index: " + index);
+            }
+        }
         $("#walkButton, #expWalkButton").attr('disabled',false);
         $("#stopButton, #expStopButton").attr('disabled',true);
     }
@@ -101,7 +106,6 @@ function disableSaveButtons(){
     var tmpString;
     var saveName;
     for(var index = 0; index < Object.keys(patterns).length; index++){
-        //console.log(index);
         if(patterns["save"+(index+1)] === undefined || patterns["save"+(index+1)] == 0){
             tmpString = index + 1;
             saveName = "#save" + tmpString;
@@ -144,7 +148,7 @@ $("[data-pattern]").click(function () {
     ipAdress = $("#ipInput").val();
     localStorage.setItem("ipAdress", JSON.stringify(ipAdress));
     cycleTime = $("#cycleTime").val();
-    if(!($("#cycleTime").val() == "")){
+    if (!($("#cycleTime").val() == "")) {
         localStorage.setItem("cycleTime", cycleTime);
     }
     $("#spinner").removeClass("d-none");
