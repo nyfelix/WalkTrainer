@@ -7,12 +7,11 @@
 #define MAX_STEPS 10
 
 #define SERVOMIN 120 // this is the 'minimum' pulse length count (out of 4096)
-#define SERVOMAX 750 // this is the 'maximum' pulse length count (out of 4096)
+#define SERVOMAX 800 // this is the 'maximum' pulse length count (out of 4096)
 
 int actuator = 4;
 int steps = 4;
 
-//double targetPos[actuator][steps] = {{0, 30, 60, 90,120, 90, 60, 30},{180, 90, 0, 90,90, 180, 90, 0,},{180, 0, 180, 0,90, 180, 90, 0,},{180, 0, 180, 90,90, 180, 90, 0,}};
 double targetPos[MAX_ACTUATORS][MAX_STEPS] = {0};
 double currentPos[MAX_ACTUATORS] = {0};
 int pinNr[MAX_ACTUATORS] = {0};
@@ -23,7 +22,6 @@ double cycleTime = 1000;
 double stepTime = cycleTime / steps;
 double startTime;
 bool stop = true;
-//int servos[4] = {0,2,4,6}
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
@@ -58,7 +56,6 @@ void loop()
 {
     if (stop == false)
     {
-        Serial.println(stepTime);
         posCalculator(targetPos, steps, countActuators, pinNr, currentStep, currentPos);
 
         if ((millis() - startTime) / ((stepsDone + 1) * stepTime) >= 1)
@@ -70,7 +67,6 @@ void loop()
                 currentStep = 0;
             }
         }
-        Serial.println(currentStep);
         loopApi();
     }
     else
@@ -101,8 +97,6 @@ void posCalculator(const double mat[MAX_ACTUATORS][MAX_STEPS], const int nrSteps
 
 void callbackPost(JsonObject &content)
 {
-    //Serial.println(content["steps"].as<String>());
-    //Serial.println(content["cycleTime"].as<double>());
     if (content.containsKey("cycleTime"))
     {
         cycleTime = content["cycleTime"].as<double>();
@@ -139,6 +133,5 @@ void callbackPost(JsonObject &content)
                 targetPos[i][j] = map(targetPos[i][j], 0, 180, SERVOMIN, SERVOMAX);
             }
         }
-    }
-    Serial.println(stop);
+    }  
 }
