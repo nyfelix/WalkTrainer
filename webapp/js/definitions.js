@@ -1,37 +1,30 @@
-var stop = true;
-var url = "";
-var actuators = [0,0,0,0,0,0,0,0];
-var pinNumber = actuators.map(getPinNumber);
-var cycleTime = 0;
-var steps = 8;
-var maxSteps= 10;
-var patterns = {save1: [], save2: [], save3: []};
-var saveSelected = false;
-var copySelected = false;
-var clearSelected = false;
-var saveId = 0;
-var copyId = 0;
-var stepsInput = $("#stepsInput");
-var pinCount = pinNumber.length;
-var ipAdress;
-var expMode = false;
+var stop = true;                                    //for stopping & setting in motion (robot)
+var actuators = [0,0,0,0,0,0,0,0];                  //to see which of the actuator buttons activated
+var pinNumber = actuators.map(getPinNumber);        //for the chosen pins
+var cycleTime = 0;                                  //time needed for a whole cycle of a pattern
+var steps = 8;                                      //steps chosen by the user
+var maxSteps= 10;                                   //maximum possuble steps
+var patterns = {save1: [], save2: [], save3: []};   //save slots for the patterns
+var saveSelected = false;                           // flag for save button on the patterns-tab
+var copySelected = false;                           // flag for copy button on the patterns-tab
+var clearSelected = false;                          // flag for clear button on the patterns-tab
+var saveId = 0;                                     //
+var copyId = 0;                                     //
+var ipAdress;                                       //for IP-adress of adafruit
+var expMode = false;                                //shows if experimental mode is enabled
+var colorNames = Object.keys(window.chartColors);   // different colors for the chart
 
-var STEPS = [];
+var STEPS = [];                                     //creating labels für the charts; depends on maxSteps
 for(var index = 0; index < maxSteps; index++){
     STEPS[index] = index;
 }
 
+//configurations for the chart
 var config = {
     type: 'line',
     data: {
         labels: ['0', '1', '2', '3', '4', '5', '6'],
-        datasets: [/*{
-            label: 'My First dataset',
-            backgroundColor: window.chartColors.red,
-            borderColor: window.chartColors.red,
-            data: [],
-            fill: false
-        }*/]
+        datasets: []
     },
     options: {
         maintainAspectRatio: true,
@@ -78,7 +71,9 @@ var config = {
         }
     }
 };
-
+//*********************************************************************************************************************
+//these functions are needed to be loaded before functions.js
+//*********************************************************************************************************************
 function getPinNumber(value,index,array) {
     if(value == 1){
         return index;

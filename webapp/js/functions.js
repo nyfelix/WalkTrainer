@@ -1,5 +1,8 @@
-//Setup
-//creating the chart on loading
+/*
+This file has all the functions and event-listeners needed.
+This has to be included AFTER definitions.js
+*/
+
 $(document).ready(function () {
     $("#successAlert").hide().removeClass("d-none"); //otherwise you''ll see the alert shortly at the beginning
     $("#failAlert").hide().removeClass("d-none");
@@ -7,19 +10,11 @@ $(document).ready(function () {
 );
 
 window.onload = function() {
-    var ctx = document.getElementById('canvas').getContext('2d');
-    window.myLine = new Chart(ctx, config);
+    var ctx = document.getElementById('canvas').getContext('2d'); //these lines are needed to load the chart
+    window.myLine = new Chart(ctx, config);                       //these lines are needed to load the chart
+    //needs to be added otherwise the modal will be displayed without any interactions
    $('#copyModal').modal({ show: false});
-   /* var tmpString;
-    var saveName;
-    for(var index = 0; index < Object.keys(patterns).length; index++){
-        console.log(index);
-        if(patterns["save"+(index+1)] === undefined || patterns["save"+(index+1)] == 0){
-            tmpString = index + 1;
-            saveName = "#save" + tmpString;
-            $(saveName).prop('disabled',true);
-        }
-    }*/
+   //takes items out of localStorage and assigns to the belonging variable
    if(localStorage.getItem("actuators") !== null){
        actuators = JSON.parse(localStorage.getItem("actuators"));
        actuators.forEach(function (value,index,array) {
@@ -64,12 +59,12 @@ window.onload = function() {
     window.myLine.update();
 };
 
+//disables/enables patterns, walk and stop buttons on the "controls"-tab depending on the walking state
 function togglePatternButtons(){
     if(stop == true){
         for(var index = 1; index <= 3; index++){
             if(patterns["save"+(index)] !== undefined && patterns["save"+(index)] != 0){
                 $("[data-pattern = "+index+"]").attr('disabled',false);
-                console.log("Index: " + index);
             }
         }
         $("#walkButton, #expWalkButton").attr('disabled',false);
@@ -84,16 +79,10 @@ function togglePatternButtons(){
 
 }
 
+//enables all saveButtons on paramater-tab
 function enableSaveButtons(){
     var tmpString;
     var saveName;
-
-    // for (key in patterns) {
-    //     if (!patterns.hasOwnProperty(key)) continue;
-    //
-    //
-    // }
-
     for(var index = 0; index < Object.keys(patterns).length; index++){
         tmpString = index + 1;
         saveName = "#save" + tmpString;
@@ -101,6 +90,7 @@ function enableSaveButtons(){
     }
 }
 
+//disables saveButtons which have no pattern assigned to them
 function disableSaveButtons(){
     var tmpString;
     var saveName;
@@ -113,35 +103,36 @@ function disableSaveButtons(){
     }
 }
 
-
+//*********************************************************************************************************************
 //contol page
+//*********************************************************************************************************************
 
+//for making the robot walk
 $("#walkButton,#expWalkButton").click(function () {
         stop = false;
-        console.log("Walk");
         togglePatternButtons();
         $("#patternsManipulateButtons button").attr("disabled", true);
         ipAdress = $("#ipInput").val();
-        $.post("http://" + ipAdress + "/setPattern", JSON.stringify({stop: stop, cycleTime: cycleTime}), function (data) {
-            console.log(data);
-        });
+        $.post("http://" + ipAdress + "/setPattern", JSON.stringify({
+            stop: stop
+        }));
     }
 );
 
+//for making the robot stop
 $("#stopButton,#expStopButton").click(function () {
         stop = true;
-        console.log(stop);
         togglePatternButtons();
         $("#patternsManipulateButtons button").attr("disabled",false);
         disableSaveButtons();
     ipAdress = $("#ipInput").val();
-    $.post("http://" + ipAdress + "/setPattern", JSON.stringify({stop: stop}), function( data ) {
-        console.log(data);
-    });
+    $.post("http://" + ipAdress + "/setPattern", JSON.stringify({
+        stop: stop
+    }));
     }
 );
 
-
+//for uploading patterns, cycleTime, steps, pinNumber, countActuators
 $("[data-pattern]").click(function () {
     var patternId = $(this).attr("data-pattern");
     ipAdress = $("#ipInput").val();
@@ -156,11 +147,13 @@ $("[data-pattern]").click(function () {
     if (!($("#cycleTime").val() == "")) {
         localStorage.setItem("cycleTime", cycleTime);
     }
-    $("#spinner").removeClass("d-none");
-    $("#content").addClass("disable-content");
+    $("#spinner").removeClass("d-none");    //add loading spinner
+    $("#content").addClass("disable-content");  //blurs the whole page
     $.ajaxSetup({
-        timeout: 10000
+        timeout: 10000  //how long to wait before the browser decides that the connection failed due timeout
     });
+
+    //sending request
     $.post("http://" + ipAdress + "/setPattern", JSON.stringify({
         steps: steps,
         cycleTime: cycleTime,
@@ -168,16 +161,14 @@ $("[data-pattern]").click(function () {
         pinNumber: pinNumber,
         countActuators: pinNumber.length
     }), function (data) {
-        console.log(data);
         $("#spinner").addClass("d-none");
         $("#content").removeClass("disable-content");
-        if (data.result == true) {
-            console.log("Upload Success");
+        if (data.result == true) {                                          //in case of a successful connection
             $("#successAlert").fadeTo(2000, 500).slideUp(500, function () {
                 $("#successAlert").slideUp(500);
             });
         }
-    }).fail(function () {
+    }).fail(function () {                                                  //in case of a failed connection due timeout
         console.log("fail");
         $("#spinner").addClass("d-none");
         $("#content").removeClass("disable-content");
@@ -185,23 +176,19 @@ $("[data-pattern]").click(function () {
             $("#failAlert").slideUp(500);
         });
     });
-    console.log("Click Pattern" + patternId);
-});
-//Navigating without reloading page
-
-$("[data-nav]").click(function () {
-    var pageId = $(this).attr("data-nav");
-    console.log("PageID: "+ pageId);
-    $("[data-nav]").removeClass("bg-secondary").filter("[data-nav = "+pageId+"]").addClass("bg-secondary");
-    $("[data-page]").addClass("d-none").filter("[data-page ="+pageId+"]").removeClass("d-none");
 });
 
+
+
+
+//*********************************************************************************************************************
 //configurations page
+//*********************************************************************************************************************
 
+//to find out which pins are enabled
 $('#actuatorButtons button').click(function() {
     $(this).toggleClass("active");
     var index = $(this).text();
-    console.log(index);
     if(actuators[index])
     {
         actuators[index] = 0;
@@ -210,35 +197,37 @@ $('#actuatorButtons button').click(function() {
     {
         actuators[index] = 1;
     }
-    console.log("Selected actuators "+actuators);
 });
 
+//assigns number of steps to it's variable; passes steps & nr of actuators to the chart on "patterns"
+// and updates it with random values
 $("#saveConfigButton").click(function (e) {
     e.preventDefault();
-    console.log(stepsInput.val());
-    if(stepsInput.val() > maxSteps)
+    console.log($("#stepsInput").val());
+    if($("#stepsInput").val() > maxSteps)     //checking if the input doesn't exceed the MAX value
     {
         $("#stepsAlert").removeClass("d-none");
         return;
     }
-    else if(stepsInput.val() != "")
+    else if($("#stepsInput").val() != "")
     {
         $("#stepsAlert").addClass("d-none");
-        steps = stepsInput.val();
+        steps = $("#stepsInput").val();
         localStorage.setItem("steps",steps);
     }
     config.data.labels.splice(0,config.data.labels.length);
-    for(var index = 0; index < steps; index++){
+    for(var index = 0; index < steps; index++){             //getting the right amount of labels for the horizontal axis
         config.data.labels[index] = STEPS[index];
     }
-    pinNumber = actuators.map(getPinNumber);
-    pinNumber.sort(function(a, b){return a - b});
-    pinNumber = pinNumber.filter(reduceArray);
-    if(actuators[0] == 1){
+
+    pinNumber = actuators.map(getPinNumber);        //getting the index of all the elements with "1" in it
+    pinNumber.sort(function(a, b){return a - b});   //sorting array from small to big so you can remove all zeros
+    pinNumber = pinNumber.filter(reduceArray);      //removing all elements with "0" in it
+    if(actuators[0] == 1){                          //if pin 0 was selected, it will be deletet in the line above, so this is to undo it
         pinNumber.unshift(0);
     }
-    console.log("Used Pins " + pinNumber);
-    console.log("Labels: " + config.data.labels);
+
+    //pushing  new randomized datasets for  the charts; number of datasets depends number of actuators
     config.data.datasets.splice(0, config.data.datasets.length);
     for (var index = 0; index < pinNumber.length; index++) {
         var colorName = colorNames[config.data.datasets.length % colorNames.length];
@@ -255,12 +244,16 @@ $("#saveConfigButton").click(function (e) {
         }
         config.data.datasets.push(newDataset);
     }
+
     localStorage.setItem("actuators",JSON.stringify(actuators));
     window.myLine.update();
-
 });
-//patterns page
 
+//*********************************************************************************************************************
+//patterns page
+//*********************************************************************************************************************
+
+//toggle experimental mode
 $("#toggleButton").on('change', function() {
     if ($(this).is(':checked')) {
         $("#expButtons").removeClass("d-none");
@@ -273,24 +266,26 @@ $("#toggleButton").on('change', function() {
         localStorage.setItem("expMode", JSON.stringify(expMode));
     }});
 
+//event handler for clicking on the patterns buttons
 $("[data-save]").click(function () {
     saveId = $(this).attr('data-save');
     console.log("SaveID: " + saveId);
 
+    //displays the pattern saved in the corresponding button
     if(saveSelected == false && copySelected == false && clearSelected == false){
         for(var index = 0; index <pinNumber.length; index++){
             config.data.datasets[index].data = [];
             config.data.datasets[index].data = patterns['save'+saveId][index].filter(copyArray);
         }
-        if(expMode){
+        if(expMode){                                    //if experimental mode is on, it uploads the pattern directly
             cycleTime = $("#expCycleTime").val();
             if(!($("#cycleTime").val() == "")){
                 localStorage.setItem("cycleTime", cycleTime);
             }
-            $("[data-pattern ="+saveId+"]").trigger("click");
+            $("[data-pattern ="+saveId+"]").trigger("click"); // this triggers the upload
         }
     }
-
+    //saving displayed values on the chart into the pattern object
     if(saveSelected == true){
         for(var index = 0; index <pinNumber.length; index++){
             for(var j = 0; j < config.data.datasets[index].data.length; j++){
@@ -303,6 +298,7 @@ $("[data-save]").click(function () {
         $("#saveButton").trigger("click");
     }
 
+    //opens a window to choose to which pattern button to copy to
     if(copySelected == true){
         $(this).addClass("active");
         switch (saveId){
@@ -322,6 +318,7 @@ $("[data-save]").click(function () {
         $("#copyModal").modal('show').attr('data-selected', saveId);
     }
 
+    //clearing a save
     if(clearSelected == true){
 
        patterns['save'+saveId] = [];
@@ -329,26 +326,21 @@ $("[data-save]").click(function () {
        $("#clearButton").trigger("click");
     }
 
-
-
     disableSaveButtons();
-    //console.log($(this).attr("id"));
     window.myLine.update();
-    //console.log(patterns['save' + saveId]);
 });
 
-$("#copyModal button").click(function () {                              //copying one pattern to another
+//copies on save to another
+$("#copyModal button").click(function () {
     copyId = $(this).attr("data-copy");
     for(var index = 0; index < pinNumber.length; index++){
         patterns['save'+copyId][index] = patterns['save'+saveId][index].filter(copyArray);
     }
-    //patterns['save'+copyId] = patterns['save'+saveId];
     enableSaveButtons();
     $("#copyButton").trigger("click");
-    console.log("CopyID: " + copyId);
 });
 
-
+// for transforming save button to an cancel button and back
 $("#saveButton").click(function () {
     if(saveSelected === false){
         saveSelected = true;
@@ -364,6 +356,7 @@ $("#saveButton").click(function () {
     }
 });
 
+// for transforming copy button to an cancel button and back
 $("#copyButton").click(function () {
     if(copySelected === false){
         copySelected = true;
@@ -381,6 +374,7 @@ $("#copyButton").click(function () {
 
 });
 
+// for transforming clear button to an cancel button and back
 $("#clearButton").click(function () {
     if(clearSelected === false){
         clearSelected = true;
@@ -397,17 +391,14 @@ $("#clearButton").click(function () {
     }
 });
 
-/*
-$("#cancelButton").click(function () {
-    $("#saveButton, #copyButton, #clearButton").prop("disabled",false);
-    saveSelected = false;
-    copySelected = false;
-    clearSelected = false;
-    $("#cancelButton").addClass("d-none");
-    disableSaveButtons();
+//*********************************************************************************************************************
+//other functions
+//*********************************************************************************************************************
+
+//Navigating without reloading page by disabling content
+$("[data-nav]").click(function () {
+    var pageId = $(this).attr("data-nav");
+    console.log("PageID: "+ pageId);
+    $("[data-nav]").removeClass("bg-secondary").filter("[data-nav = "+pageId+"]").addClass("bg-secondary");
+    $("[data-page]").addClass("d-none").filter("[data-page ="+pageId+"]").removeClass("d-none");
 });
-*/
-
-//charts.js functions for comparing
-
-var colorNames = Object.keys(window.chartColors);
