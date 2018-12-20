@@ -1,3 +1,9 @@
+/*
+This file contains all the needed global variables
+& the configuration for the chart.
+this file has to be included before the function.js file
+*/
+
 var stop = true;                                    //for stopping & setting in motion (robot)
 var actuators = [0,0,0,0,0,0,0,0];                  //to see which of the actuator buttons activated
 var pinNumber = actuators.map(getPinNumber);        //for the chosen pins

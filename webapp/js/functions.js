@@ -4,8 +4,8 @@ This has to be included AFTER definitions.js
 */
 
 $(document).ready(function () {
-    $("#successAlert").hide().removeClass("d-none"); //otherwise you''ll see the alert shortly at the beginning
-    $("#failAlert").hide().removeClass("d-none");
+    $("#successAlert,#expSuccessAlert").hide().removeClass("d-none"); //otherwise you''ll see the alert shortly at the beginning
+    $("#failAlert,#expFailAlert").hide().removeClass("d-none");
     }
 );
 
@@ -164,16 +164,16 @@ $("[data-pattern]").click(function () {
         $("#spinner").addClass("d-none");
         $("#content").removeClass("disable-content");
         if (data.result == true) {                                          //in case of a successful connection
-            $("#successAlert").fadeTo(2000, 500).slideUp(500, function () {
-                $("#successAlert").slideUp(500);
+            $("#successAlert,#expSuccessAlert").fadeTo(2000, 500).slideUp(500, function () {
+                $("#successAlert,#expSuccessAlert").slideUp(500);
             });
         }
     }).fail(function () {                                                  //in case of a failed connection due timeout
         console.log("fail");
         $("#spinner").addClass("d-none");
         $("#content").removeClass("disable-content");
-        $("#failAlert").fadeTo(2000, 500).slideUp(500, function () {
-            $("#failAlert").slideUp(500);
+        $("#failAlert,#expFailAlert").fadeTo(2000, 500).slideUp(500, function () {
+            $("#failAlert,#expFailAlert").slideUp(500);
         });
     });
 });
@@ -189,14 +189,7 @@ $("[data-pattern]").click(function () {
 $('#actuatorButtons button').click(function() {
     $(this).toggleClass("active");
     var index = $(this).text();
-    if(actuators[index])
-    {
-        actuators[index] = 0;
-    }
-    else
-    {
-        actuators[index] = 1;
-    }
+    actuators[index] = actuators[index] ? 0: 1;
 });
 
 //assigns number of steps to it's variable; passes steps & nr of actuators to the chart on "patterns"

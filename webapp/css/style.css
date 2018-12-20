@@ -20,10 +20,6 @@ ul.nav {
 
 /*Extra large devices (large desktops, 1200px and up)*/
 @media (min-width: 1200px) {
-/*canvas{
-    max-width: 90vw !important;
-    max-height: 60vh !important;
-}*/
 }
 
 input[type=number]::-webkit-inner-spin-button,
@@ -37,8 +33,9 @@ canvas{
     -webkit-user-select: none;
     -ms-user-select: none;
 }
-
+/*********************************************************************************************************************/
 /* spinner */
+/*********************************************************************************************************************/
 .sk-folding-cube {
     margin: 20px auto;
     width: 40px;
@@ -129,24 +126,9 @@ canvas{
             opacity: 0;
         }
 }
-
-/*#pano{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height:100%;
-    z-index: 2;
-}*/
-
-/*.container{
-    !* overflow: hidden; *!
-    -webkit-filter: blur(13px);
-    -moz-filter: blur(13px);
-    -o-filter: blur(13px);
-    -ms-filter: blur(13px);
-    filter: blur(13px);
-}*/
+/*********************************************************************************************************************/
+/*for blurring content when uploading*/
+/*********************************************************************************************************************/
 
 .disable-content {
     pointer-events: none;
@@ -156,8 +138,9 @@ canvas{
     -ms-filter: blur(13px);
     filter: blur(13px);
 }
-
+/*********************************************************************************************************************/
 /* experimentalModeSwitch */
+/*********************************************************************************************************************/
 
 /* The switch - the box around the slider */
 .switch {
@@ -221,3 +204,6 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
+/*********************************************************************************************************************/
+/*********************************************************************************************************************/
