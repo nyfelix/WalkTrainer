@@ -45,8 +45,7 @@ window.onload = function() {
 
     if(localStorage.getItem("cycleTime") !== null){
         cycleTime = parseInt(JSON.parse(localStorage.getItem("cycleTime")));
-        $('#cycleTime').val(cycleTime);
-        $('#expCycleTime').val(cycleTime);
+        $("#cycleTime,#expCycleTime").val(cycleTime);
     }
 
     if(localStorage.getItem("ipAdress") !== null){
@@ -121,11 +120,11 @@ $("#walkButton,#expWalkButton").click(function () {
         stop = false;
         console.log("Walk");
         togglePatternButtons();
-        $("#patternsManipulateButtons button").attr("disabled",true);
-    ipAdress = $("#ipInput").val();
-    $.post("http://" + ipAdress + "/setPattern", JSON.stringify({stop: stop}), function( data ) {
-        console.log(data);
-    });
+        $("#patternsManipulateButtons button").attr("disabled", true);
+        ipAdress = $("#ipInput").val();
+        $.post("http://" + ipAdress + "/setPattern", JSON.stringify({stop: stop, cycleTime: cycleTime}), function (data) {
+            console.log(data);
+        });
     }
 );
 
@@ -147,14 +146,20 @@ $("[data-pattern]").click(function () {
     var patternId = $(this).attr("data-pattern");
     ipAdress = $("#ipInput").val();
     localStorage.setItem("ipAdress", JSON.stringify(ipAdress));
-    cycleTime = $("#cycleTime").val();
+    if (expMode == true) {
+        cycleTime = $("#expCycleTime").val();
+    }
+    else {
+        cycleTime = $("#cycleTime").val();
+    }
+    $("#cycleTime,#expCycleTime").val(cycleTime);
     if (!($("#cycleTime").val() == "")) {
         localStorage.setItem("cycleTime", cycleTime);
     }
     $("#spinner").removeClass("d-none");
     $("#content").addClass("disable-content");
     $.ajaxSetup({
-        timeout: 5000
+        timeout: 10000
     });
     $.post("http://" + ipAdress + "/setPattern", JSON.stringify({
         steps: steps,
@@ -167,6 +172,7 @@ $("[data-pattern]").click(function () {
         $("#spinner").addClass("d-none");
         $("#content").removeClass("disable-content");
         if (data.result == true) {
+            console.log("Upload Success");
             $("#successAlert").fadeTo(2000, 500).slideUp(500, function () {
                 $("#successAlert").slideUp(500);
             });
