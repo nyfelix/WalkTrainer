@@ -16,7 +16,6 @@
 #define FILE_BUF 50
 #define RESPONSE_DEFAULT_INVALID "{ \"jsonroc\" : \"2.0\", \"result\" : false }"
 #define RESPONSE_DEFAULT_SUCCESS "{ \"jsonroc\" : \"2.0\", \"result\" : true }"
-#define RESPONSE_NOT_FOUND "{ \"jsonroc\" : \"2.0\", \"error\" : \"Method not implemented.\" }"
 
 // Set web server port number to 80
 WiFiServer server(LISTEN_PORT);
@@ -30,7 +29,7 @@ String handlePOST(String url, String content);
 String handleGET(String url, String params);
 //////////////////////////////////////////////////
 
-std::function<void(JsonObject&)> cb_request;
+std::function<void(JsonObject&)> cb_request; //creating template to use JsonObjects in main.cpp file
 
 void setupApi() {
   // Connect to Wi-Fi network with SSID and password
@@ -50,7 +49,6 @@ void setupApi() {
 }
 
 void printJSONHeaders() {
-  //ToDo: Set proper Headers here
   client.println("HTTP/1.1 200 OK");
   client.println("Content-Type: text/json");
   client.println("Access-Control-Allow-Origin: *");
@@ -112,9 +110,6 @@ String handlePOST(String url, String content) {
 }
 
 String handleGET(String url, String params) {
-  if (url == "/state") {
-    return RESPONSE_NOT_FOUND;
-  }
   return "";
 }
 

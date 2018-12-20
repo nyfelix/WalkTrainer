@@ -1,3 +1,9 @@
+/*
+This file is the main programm for controlling the roboter
+in this file is the algorithm for calculating and setting the angle
+for each actuator
+*/
+
 #include <Wire.h>
 #include <Api.h>
 #include <Adafruit_PWMServoDriver.h>
@@ -12,36 +18,37 @@
 int actuator = 4;
 int steps = 4;
 
-double targetPos[MAX_ACTUATORS][MAX_STEPS] = {0};
-double currentPos[MAX_ACTUATORS] = {0};
-int pinNr[MAX_ACTUATORS] = {0};
-int countActuators = 0;
-int currentStep = 0;
-int stepsDone = 0;
-double cycleTime = 1000;
+double targetPos[MAX_ACTUATORS][MAX_STEPS] = {0};  //matrix for the incoming angle values
+double currentPos[MAX_ACTUATORS] = {0}; // array which shows the current position of each actuator 
+int pinNr[MAX_ACTUATORS] = {0}; //shows which pins are used
+int countActuators = 0; // amount of actuators used
+int currentStep = 0; // current step in the pattern
+int stepsDone = 0; // number of steps done since the robot started walking
+double cycleTime = 1000; 
 double stepTime = cycleTime / steps;
-double startTime;
-bool stop = true;
+double startTime; //the time when the robot started walking
+bool stop = true; // state for walking
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
+//calculates for every actuator the position it needs to on calling
 void posCalculator(const double mat[MAX_ACTUATORS][MAX_STEPS], const int nrSteps, const int nrActuators, const int usedPins[], const int currStep, double currPos[]);
+// checks the String from the request for the needed parameters
 void callbackPost(JsonObject &content);
 
 
 void setup()
 {
-    // put your setup code here, to run once:
     Serial.begin(115200);
     Serial.setDebugOutput(true);
     Serial.println("Setup Done");
 
-    setupApi();
+    setupApi(); //setting up the webserver
 
-    cb_request = callbackPost;
+    cb_request = callbackPost; // assigning it here so the string from the request can seen in the main.cpp file
 
-    pwm.begin();
-    pwm.setPWMFreq(60); // Set to whatever you like, we don't use it in this demo!
+    pwm.begin();        //starting communication to the servo shield
+    pwm.setPWMFreq(60); // analog servos need about 60 Hz
 
     for (int i = 0; i < actuator; i++)
     {
@@ -58,7 +65,7 @@ void loop()
     {
         posCalculator(targetPos, steps, countActuators, pinNr, currentStep, currentPos);
 
-        if ((millis() - startTime) / ((stepsDone + 1) * stepTime) >= 1)
+        if ((millis() - startTime) / ((stepsDone + 1) * stepTime) >= 1) //to check if have to go to the next step
         {
             currentStep++;
             stepsDone++;
@@ -67,7 +74,7 @@ void loop()
                 currentStep = 0;
             }
         }
-        loopApi();
+        loopApi(); //detecting & handling requests
     }
     else
     {
